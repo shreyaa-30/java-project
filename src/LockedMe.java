@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 class LockedMeModel {
     private static final String Author = "Shreya Bhattacharjya" ;
@@ -21,6 +20,19 @@ class LockedMeModel {
                                 "3.Search file.\n" +
                                 "4.Back.\n";
 
+
+    void printFiles() {
+        String[] all_files = project_directory.list();
+        if(all_files.length == 0) {
+            System.out.println("No file present.");
+            return;
+        }
+        Arrays.sort(all_files);
+        System.out.println("Files in sorted order:");
+        for(String filename : all_files) {
+            System.out.println(filename);
+        }
+    }
     void addFile() throws IOException {
         System.out.print("Enter filename > ");
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +78,7 @@ class LockedMeModel {
             int input = scanner.nextInt();
             switch(input) {
                 case 1:
+                    printFiles();
                     handlePrimaryMenu();
                 case 2:
                     handleFileOptions();
