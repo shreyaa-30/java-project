@@ -52,7 +52,7 @@ class LockedMeModel {
         String filename = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
         File newFile = new File(project_directory + "/" + filename);
         if(!newFile.exists()) {
-            System.out.println("File: "+ filename +" doesn't exist.");
+            System.out.println("FILE NOT FOUND: "+ filename);
             return;
         }
         newFile.delete();
