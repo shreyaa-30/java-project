@@ -1,8 +1,12 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 class LockedMeModel {
     private static final String Author = "Shreya Bhattacharjya" ;
     private static final String Application_name = "LockedMe.com" ;
+    File project_directory = new File("files");
     private static final String Welcome_Message = "+++++  " + Application_name + " +++++\n" +
                                                    "++++ " + Author + "++++\n" ;
 
@@ -16,6 +20,44 @@ class LockedMeModel {
                                 "2.Delete file.\n" +
                                 "3.Search file.\n" +
                                 "4.Back.\n";
+
+    void addFile() throws IOException {
+        System.out.print("Enter filename > ");
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+        File newFile = new File(project_directory + "/" + filename);
+        if(newFile.exists() == true) {
+            System.out.println("File: "+ filename +" already exists");
+            return;
+        }
+        newFile.createNewFile();
+        System.out.println("File "+ filename + " added.");
+    }
+
+    void deleteFile() throws IOException {
+        System.out.print("Enter filename > ");
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+        File newFile = new File(project_directory + "/" + filename);
+        if(!newFile.exists()) {
+            System.out.println("File: "+ filename +" doesn't exist.");
+            return;
+        }
+        newFile.delete();
+        System.out.println("File "+ filename + " deleted.");
+    }
+
+    void searchFile() throws IOException {
+        System.out.print("Enter filename > ");
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+        File newFile = new File(project_directory + "/" + filename);
+        if(newFile.exists()) {
+            System.out.println("File: "+ filename +" exists");
+        } else {
+            System.out.println("File: " + filename + " not present.");
+        }
+    }
 
     void handlePrimaryMenu() {
         System.out.println(primary_screen);
@@ -44,13 +86,13 @@ class LockedMeModel {
             int input = scanner.nextInt();
             switch (input) {
                 case 1:
-                    // handle add file
+                    addFile();
                     handleFileOptions();
                 case 2:
-                    // handle delete file
+                    deleteFile();
                     handleFileOptions();
                 case 3:
-                    // handle search file
+                    searchFile();
                     handleFileOptions();
                 case 4:
                     handlePrimaryMenu();
@@ -62,6 +104,9 @@ class LockedMeModel {
     }
 
     LockedMeModel() {
+        if(project_directory.exists() == false) {
+            project_directory.mkdirs();
+        }
         System.out.println(Welcome_Message);
     }
 }
